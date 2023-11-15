@@ -9,11 +9,11 @@ import main_page from "./images/main_page.jpg"
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const Home = () => (
-  <div>
-    <h2>Strona główna</h2>
-    <img src={main_page} alt='biology'></img>
+  <div className="flex flex-col items-center">
+    <img src={main_page} alt='biology' className="m-auto" />
   </div>
 );
+
 
 
 const MuscularSystem = () => (
@@ -74,9 +74,9 @@ function App() {
         </Navbar>
 
         <div className="flex-grow flex items-center justify-center">
-          <Nav variant="tabs" className="bg-light p-4 text-dark">
+          <Nav variant="tabs" defaultActiveKey="" className="bg-light p-4 text-dark">
             <Nav.Item>
-              <Nav.Link as={NavLink} to='/strona-glowna'>
+              <Nav.Link as={NavLink} to='/'>
                 Strona główna
               </Nav.Link>
             </Nav.Item>
@@ -100,7 +100,7 @@ function App() {
 
         <div className="container mx-auto p-4">
           <Routes>
-            <Route path="/strona-glowna" element={<Home />} index />
+            <Route path="/" element={<Home />} index />
             <Route path="/uklad-miesniowy" element={<MuscularSystem />} />
             <Route path="/uklad-kostny" element={<SkeletalSystem />} />
             <Route path="/*" element={<NotFound />} />
