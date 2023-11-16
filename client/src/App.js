@@ -1,5 +1,5 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -64,6 +64,21 @@ const NotFound = () => (
 );
 
 function App() {
+
+  const [backendData, setBackendData] = useState([{}])
+
+useEffect(() => {
+  fetch("/api").then(
+    response => response.json()
+  ).then(
+    data => {
+      setBackendData(data)
+    }
+  )
+}, [])
+
+
+
   return (
     <Router>
       <div className='App bg-gray-100 min-h-screen p-0 m-0'>
