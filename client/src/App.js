@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Accordion from 'react-bootstrap/Accordion';
-import main_page from "./images/main_page.jpg"
-
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import main_page from "./images/main_page.jpg";
 
 const Home = () => (
   <div className="flex flex-col items-center">
@@ -14,44 +13,20 @@ const Home = () => (
   </div>
 );
 
-
-
-const MuscularSystem = () => (
+const Topic = ({ title, subtopics }) => (
   <div>
-    <h2>Układ mięśniowy</h2>
+    <h2>{title}</h2>
     <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Definicje</Accordion.Header>
-        <Accordion.Body>
-          info
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="1">
-        <Accordion.Header>Rodzaje mięsni</Accordion.Header>
-        <Accordion.Body>
-          info
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
-  </div>
-);
-
-const SkeletalSystem = () => (
-  <div>
-    <h2>Układ kostny</h2>
-    <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Temat za tydzien</Accordion.Header>
-        <Accordion.Body>
-          tu pojawia sie informacje na sprawdzian na za tydzien
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="1">
-        <Accordion.Header>Temat za tydzien</Accordion.Header>
-        <Accordion.Body>
-        tu pojawia sie informacje na sprawdzian na za tydzien
-        </Accordion.Body>
-      </Accordion.Item>
+      {subtopics.map((subtopic, index) => (
+        <Accordion.Item key={index} eventKey={index.toString()}>
+          <Accordion.Header>{subtopic.title}</Accordion.Header>
+          <Accordion.Body>
+            {subtopic.notes.map((note) => (
+              <p key={note.id}>{note.content}</p>
+            ))}
+          </Accordion.Body>
+        </Accordion.Item>
+      ))}
     </Accordion>
   </div>
 );
@@ -64,20 +39,15 @@ const NotFound = () => (
 );
 
 function App() {
+  const [backendData, setBackendData] = useState({ topics: [] });
 
-  const [backendData, setBackendData] = useState([{}])
-
-useEffect(() => {
-  fetch("/api").then(
-    response => response.json()
-  ).then(
-    data => {
-      setBackendData(data)
-    }
-  )
-}, [])
-
-
+  useEffect(() => {
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, []);
 
   return (
     <Router>
@@ -95,16 +65,13 @@ useEffect(() => {
                 Strona główna
               </Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-              <Nav.Link as={NavLink} to="/uklad-miesniowy">
-                Układ mięśniowy
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link as={NavLink} to='/uklad-kostny'>
-                Układ kostny
-              </Nav.Link>
-            </Nav.Item>
+            {backendData.topics.map((topic, index) => (
+              <Nav.Item key={index}>
+                <Nav.Link as={NavLink} to={`/${topic.title.replace(/\s+/g, '-').toLowerCase()}`}>
+                  {topic.title}
+                </Nav.Link>
+              </Nav.Item>
+            ))}
             <Nav.Item>
               <Nav.Link as={NavLink} to='/nastepny-temat' disabled>
                 Jeszcze nie znam następnego tematu
@@ -116,8 +83,13 @@ useEffect(() => {
         <div className="container mx-auto p-4">
           <Routes>
             <Route path="/" element={<Home />} index />
-            <Route path="/uklad-miesniowy" element={<MuscularSystem />} />
-            <Route path="/uklad-kostny" element={<SkeletalSystem />} />
+            {backendData.topics.map((topic, index) => (
+              <Route
+                key={index}
+                path={`/${topic.title.replace(/\s+/g, '-').toLowerCase()}`}
+                element={<Topic title={topic.title} subtopics={topic.subtopics} />}
+              />
+            ))}
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>
