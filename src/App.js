@@ -42,7 +42,7 @@ function App() {
   const [backendData, setBackendData] = useState({ topics: [] });
 
   useEffect(() => {
-    fetch("/api")
+    fetch("https://sciaga-sprawdziany-api.vercel.app/server.js")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
