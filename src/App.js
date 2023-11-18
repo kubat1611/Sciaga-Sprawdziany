@@ -54,7 +54,7 @@ function App() {
       <div className='App bg-gray-100 min-h-screen p-0 m-0'>
         <Navbar className="bg-primary text-white text-center">
           <Container className="d-flex justify-content-center">
-            <Navbar.Brand className="text-4xl text-white">Ściąga biologia</Navbar.Brand>
+            <Navbar.Brand className="text-4xl text-white">Ściągi hub</Navbar.Brand>
           </Container>
         </Navbar>
 
