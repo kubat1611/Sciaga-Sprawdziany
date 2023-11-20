@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import main_page from "./images/history.jpg";
+import main_page from "./images/biology.jpg";
 
 const Home = () => (
   <div className="flex flex-col items-center">
