@@ -4,12 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Accordion from 'react-bootstrap/Accordion';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import main_page from "./images/history.jpg";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import main_page from "./images/geography.jpg";
 
 const Home = () => (
   <div className="flex flex-col items-center">
-    <img src={main_page} alt='biology' className="m-auto" />
+    <img src={main_page} alt='geography' className="m-auto" />
   </div>
 );
 
